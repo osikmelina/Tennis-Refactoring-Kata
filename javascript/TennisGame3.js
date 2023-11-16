@@ -1,31 +1,29 @@
-var TennisGame3 = function(p1N, p2N) {
-    this.p2 = 0;
-    this.p1 = 0;
+const TennisGame3 = function(player1Name, player2Name) {
+    this.player1 = 0;
+    this.player2 = 0;
 
-    this.p1N = p1N;
-    this.p2N = p2N;
+    this.player1Name = player1Name;
+    this.player2Name = player2Name;
 };
 
 TennisGame3.prototype.getScore = function() {
-    var s;
-    if ((this.p1 < 4 && this.p2 < 4) && (this.p1 + this.p2 < 6)) {
-        var p = ["Love", "Fifteen", "Thirty", "Forty"];
-        s = p[this.p1];
-        return (this.p1 == this.p2) ? s + "-All" : s + "-" + p[this.p2];
+    const MAX_REGULAR_POINTS = 4
+    const MAX_POINTS_SUM_BEFORE_ADVANTAGE = 6
+    let score;
+    if ((this.player1 < MAX_REGULAR_POINTS && this.player2 < MAX_REGULAR_POINTS) && (this.player1 + this.player2 < MAX_POINTS_SUM_BEFORE_ADVANTAGE)) {
+        var points = ["Love", "Fifteen", "Thirty", "Forty"];
+        score = points[this.player1];
+        return (this.player1 == this.player2) ? score + "-All" : score + "-" + points[this.player2];
     } else {
-        if (this.p1 == this.p2)
+        if (this.player1 == this.player2)
             return "Deuce";
-        s = this.p1 > this.p2 ? this.p1N : this.p2N;
-        return ((this.p1 - this.p2) * (this.p1 - this.p2) == 1) ? "Advantage " + s : "Win for " + s;
+        score = this.player1 > this.player2 ? this.player1Name : this.player2Name;
+        return ((this.player1 - this.player2) * (this.player1 - this.player2) == 1) ? "Advantage " + score : "Win for " + score;
     }
 };
 
 TennisGame3.prototype.wonPoint = function(playerName) {
-    if (playerName == "player1")
-        this.p1 += 1;
-    else
-        this.p2 += 1;
-
+    playerName == "player1" ? this.player1 += 1 : this.player2 += 1;
 };
 
 if (typeof window === "undefined") {
